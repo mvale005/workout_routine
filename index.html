@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Workout Routine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .day {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .day-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .day-content {
+            padding: 10px;
+            display: none;
+            background-color: white;
+        }
+        .day-content.show {
+            display: block;
+        }
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+            }
+            .day-header {
+                font-size: 16px;
+            }
+            .day-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>7-Day Workout Routine</h1>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 1: Cardio + Upper Body</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches (arm circles, leg swings)</p>
+            <p><strong>Cardio:</strong> 20 min run/walk (2 min walk, 1 min run, repeat)</p>
+            <p><strong>Strength:</strong></p>
+            <ul>
+                <li>Dumbbell Bench Press: 3 sets of 12 reps</li>
+                <li>Dumbbell Rows: 3 sets of 12 reps/side</li>
+                <li>Pull-Up Negatives: 2 sets of 5-8 reps</li>
+            </ul>
+            <p><strong>Stretch:</strong> Chest, triceps, hamstring (5-10 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 2: Lower Body + Light Cardio</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
+            <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
+            <p><strong>Strength:</strong></p>
+            <ul>
+                <li>Goblet Squats (kettlebell): 3 sets of 12 reps</li>
+                <li>Dumbbell Lunges: 3 sets of 10 reps/leg</li>
+                <li>Kettlebell Deadlifts: 3 sets of 12 reps</li>
+            </ul>
+            <p><strong>Stretch:</strong> Quad, calf, hip flexor (5-10 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 3: Running Focus</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
+            <p><strong>Cardio:</strong> 25 min run/walk (3 min walk, 2 min run, repeat)</p>
+            <p><strong>Strength:</strong> None</p>
+            <p><strong>Stretch:</strong> Full-body (hamstrings, calves, quads, back) (10 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 4: Full Body + Light Cardio</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
+            <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
+            <p><strong>Strength:</strong></p>
+            <ul>
+                <li>Dumbbell Shoulder Press: 3 sets of 12 reps</li>
+                <li>Kettlebell Swings: 3 sets of 15 reps</li>
+                <li>Pull-Up Bar Hanging Knee Raises: 2 sets of 10-12 reps</li>
+            </ul>
+            <p><strong>Stretch:</strong> Shoulder, lower back, hip (5-10 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 5: Active Recovery</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5 min light walk</p>
+            <p><strong>Cardio:</strong> 20-30 min easy walk or slow jog</p>
+            <p><strong>Strength:</strong> Optional: 10 squats, 10 push-ups</p>
+            <p><strong>Stretch:</strong> Full-body (focus on tight areas: hamstrings, shoulders, hips) (10-15 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 6: Cardio + Upper Body</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
+            <p><strong>Cardio:</strong> 20-25 min run/walk (2 min run, 1 min walk, repeat)</p>
+            <p><strong>Strength:</strong></p>
+            <ul>
+                <li>Dumbbell Curls: 3 sets of 12 reps</li>
+                <li>Tricep Overhead Extensions: 3 sets of 12 reps</li>
+                <li>Pull-Up Bar Hold: 2 sets of 15-30 sec</li>
+            </ul>
+            <p><strong>Stretch:</strong> Arms, chest, calf (5-10 min)</p>
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Day 7: Lower Body</div>
+        <div class="day-content">
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
+            <p><strong>Cardio:</strong> None</p>
+            <p><strong>Strength:</strong></p>
+            <ul>
+                <li>Kettlebell Step-Ups (bench): 3 sets of 10 reps/leg</li>
+                <li>Dumbbell Romanian Deadlifts: 3 sets of 12 reps</li>
+                <li>Glute Bridges: 3 sets of 15 reps</li>
+            </ul>
+            <p><strong>Stretch:</strong> Lower body focus (hamstrings, quads, glutes) (10-15 min)</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDay(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle("show");
+        }
+    </script>
+</body>
+</html>
