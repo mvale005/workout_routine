@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Day Workout Routine</title>
+    <title>7-Day Workout Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
         .day-header {
-            background-color: #007BFF;
+            background-color: #21466d;
             color: white;
             padding: 10px;
             cursor: pointer;
@@ -40,9 +40,41 @@
             margin: 5px 0;
             padding-left: 20px;
         }
+        .exercise-input {
+            margin: 5px 0;
+        }
+        .set-input {
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        input {
+            width: 50px;
+            margin-right: 5px;
+            padding: 2px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #exportBtn {
+            display: block;
+            margin: 20px auto;
+            background-color: #dc3545;
+        }
+        #clearBtn {
+            display: block;
+            margin: 10px auto;
+        }
         @media (max-width: 600px) {
-            body {
-                padding: 5px;
+            input {
+                width: 45px;
             }
             .day-header {
                 font-size: 16px;
@@ -54,19 +86,42 @@
     </style>
 </head>
 <body>
-    <h1>7-Day Workout Routine</h1>
+    <h1>7-Day Workout Tracker</h1>
 
     <div class="day">
         <div class="day-header" onclick="toggleDay(this)">Day 1: Cardio + Upper Body</div>
         <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches (arm circles, leg swings)</p>
+            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> 20 min run/walk (2 min walk, 1 min run, repeat)</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day1_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day1_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong></p>
             <ul>
-                <li>Dumbbell Bench Press: 3 sets of 12 reps</li>
-                <li>Push-ups: 40 reps</li>
-                <li>Dumbbell Rows: 3 sets of 12 reps/side</li>
-                <li>Pull-Up Negatives: 2 sets of 5-8 reps</li>
+                <li class="exercise-input" data-exercise="Day1_DumbbellBenchPress">Dumbbell Bench Press:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day1_DumbbellRows">Dumbbell Rows:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day1_PullUps">Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day1_PushUps">Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day1_Dips">Dips:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
             </ul>
             <p><strong>Stretch:</strong> Chest, triceps, hamstring (5-10 min)</p>
         </div>
@@ -77,12 +132,36 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day2_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day2_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong></p>
             <ul>
-                <li>Goblet Squats (kettlebell): 3 sets of 12 reps</li>
-                <li>Dumbbell Lunges: 3 sets of 10 reps/leg</li>
-                <li>Kettlebell Deadlifts: 3 sets of 12 reps</li>
-                <li>Nordic Hamstrings: 3 sets of 5 reps</li>
+                <li class="exercise-input" data-exercise="Day2_GobletSquats">Goblet Squats:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day2_DumbbellLunges">Dumbbell Lunges:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day2_KettlebellDeadlifts">Kettlebell Deadlifts:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day2_KettlebellSwings">Kettlebell Swings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+
+                <li class="exercise-input" data-exercise="Day2_NordicHamstring">Nordic Hamstrings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
             </ul>
             <p><strong>Stretch:</strong> Quad, calf, hip flexor (5-10 min)</p>
         </div>
@@ -93,6 +172,8 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> 25 min run/walk (3 min walk, 2 min run, repeat)</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day3_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day3_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong> None</p>
             <p><strong>Stretch:</strong> Full-body (hamstrings, calves, quads, back) (10 min)</p>
         </div>
@@ -103,11 +184,25 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day4_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day4_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong></p>
             <ul>
-                <li>Dumbbell Shoulder Press: 3 sets of 12 reps</li>
-                <li>Kettlebell Swings: 3 sets of 15 reps</li>
-                <li>Pull-Up Bar Hanging Knee Raises: 2 sets of 10-12 reps</li>
+                <li class="exercise-input" data-exercise="Day4_DumbbellShoulderPress">Dumbbell Shoulder Press:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day4_KettlebellSwings">Kettlebell Swings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day4_HangingKneeRaises">Hanging Knee Raises:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
             </ul>
             <p><strong>Stretch:</strong> Shoulder, lower back, hip (5-10 min)</p>
         </div>
@@ -118,8 +213,10 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5 min light walk</p>
             <p><strong>Cardio:</strong> 20-30 min easy walk or slow jog</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day5_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day5_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong> Optional: 10 squats, 10 push-ups</p>
-            <p><strong>Stretch:</strong> Full-body (focus on tight areas: hamstrings, shoulders, hips) (10-15 min)</p>
+            <p><strong>Stretch:</strong> Full-body (focus tight areas) (10-15 min)</p>
         </div>
     </div>
 
@@ -128,12 +225,35 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> 20-25 min run/walk (2 min run, 1 min walk, repeat)</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day6_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day6_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong></p>
             <ul>
-                <li>Dumbbell Curls: 3 sets of 12 reps</li>
-                <li>Push-ups: 40 reps</li>
-                <li>Tricep Overhead Extensions: 3 sets of 12 reps</li>
-                <li>Pull-Up Bar Hold: 2 sets of 15-30 sec</li>
+                <li class="exercise-input" data-exercise="Day6_DumbbellCurls">Dumbbell Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day6_TricepExtensions">Tricep Overhead Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day6_PullUp">Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day6_PushUps">Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day6_Dips">Dips:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
             </ul>
             <p><strong>Stretch:</strong> Arms, chest, calf (5-10 min)</p>
         </div>
@@ -144,21 +264,136 @@
         <div class="day-content">
             <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
             <p><strong>Cardio:</strong> None</p>
+            <p><strong>Steps:</strong> <input type="number" data-tracker="Day7_Steps" placeholder="Steps" min="0"></p>
+            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day7_Miles" placeholder="Miles" min="0" step="0.1"></p>
             <p><strong>Strength:</strong></p>
             <ul>
-                <li>Kettlebell Step-Ups (bench): 3 sets of 10 reps/leg</li>
-                <li>Dumbbell Romanian Deadlifts: 3 sets of 12 reps</li>
-                <li>Glute Bridges: 3 sets of 15 reps</li>
-                <li>Nordic Hamstrings: 3 sets of 5 reps</li>
+                <li class="exercise-input" data-exercise="Day7_KettlebellStepUps">Kettlebell Step-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day7_RomanianDeadlifts">Dumbbell Romanian Deadlifts:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Day7_NordicHamstring">Nordic Hamstrings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
             </ul>
             <p><strong>Stretch:</strong> Lower body focus (hamstrings, quads, glutes) (10-15 min)</p>
         </div>
     </div>
 
+    <button id="exportBtn" onclick="exportToCSV()">Export to CSV</button>
+    <button id="clearBtn" onclick="clearData()">Clear All Data</button>
+
     <script>
+        // Toggle day content
         function toggleDay(header) {
             const content = header.nextElementSibling;
             content.classList.toggle("show");
+        }
+
+        // Save tracker data (Steps and Miles)
+        document.querySelectorAll("input[data-tracker]").forEach(input => {
+            input.addEventListener("input", function() {
+                const key = this.getAttribute("data-tracker");
+                localStorage.setItem(key, this.value);
+                console.log(`Saved ${key}: ${this.value}`);
+            });
+        });
+
+        // Save exercise data (Reps and Weight)
+        document.querySelectorAll(".exercise-input input").forEach(input => {
+            input.addEventListener("input", function() {
+                const exercise = this.closest(".exercise-input").getAttribute("data-exercise");
+                const setNum = Array.from(this.parentElement.parentElement.children).indexOf(this.parentElement) + 1; // 1-based index
+                const type = this.placeholder.toLowerCase();
+                const key = `${exercise}_Set${setNum}_${type}`;
+                localStorage.setItem(key, this.value);
+                console.log(`Saved ${key}: ${this.value}`);
+            });
+        });
+
+        // Load saved data on page load
+        window.onload = function() {
+            // Load tracker data
+            document.querySelectorAll("input[data-tracker]").forEach(input => {
+                const key = input.getAttribute("data-tracker");
+                const savedValue = localStorage.getItem(key);
+                if (savedValue) {
+                    input.value = savedValue;
+                    console.log(`Loaded ${key}: ${savedValue}`);
+                }
+            });
+
+            // Load exercise data
+            document.querySelectorAll(".exercise-input input").forEach(input => {
+                const exercise = input.closest(".exercise-input").getAttribute("data-exercise");
+                const setNum = Array.from(input.parentElement.parentElement.children).indexOf(input.parentElement) + 1; // 1-based index
+                const type = input.placeholder.toLowerCase();
+                const key = `${exercise}_Set${setNum}_${type}`;
+                const savedValue = localStorage.getItem(key);
+                if (savedValue) {
+                    input.value = savedValue;
+                    console.log(`Loaded ${key}: ${savedValue}`);
+                }
+            });
+        };
+
+        // Export data to CSV
+        function exportToCSV() {
+            let csv = "Day,Exercise,Set,Reps,Weight,Steps,Miles Run\n";
+            const days = document.querySelectorAll(".day");
+            days.forEach(day => {
+                const dayName = day.querySelector(".day-header").textContent.split(":")[0].replace(" ", "");
+                const steps = localStorage.getItem(`${dayName}_Steps`) || "";
+                const miles = localStorage.getItem(`${dayName}_Miles`) || "";
+                const exercises = day.querySelectorAll(".exercise-input");
+
+                let isFirstRowOfDay = true;
+
+                if (exercises.length === 0) {
+                    csv += `${dayName},,,,${steps},${miles}\n`;
+                } else {
+                    exercises.forEach(exercise => {
+                        const fullName = exercise.getAttribute("data-exercise");
+                        const name = fullName.replace(`${dayName}_`, "").replace(/([A-Z])/g, " $1").trim(); // Clean up name
+                        const sets = exercise.querySelectorAll(".set-input");
+                        sets.forEach((set, index) => {
+                            const setNum = index + 1;
+                            const reps = localStorage.getItem(`${fullName}_Set${setNum}_reps`) || "";
+                            const weight = localStorage.getItem(`${fullName}_Set${setNum}_weight`) || "";
+                            const dayCell = isFirstRowOfDay ? dayName : "";
+                            const stepsCell = isFirstRowOfDay ? steps : "";
+                            const milesCell = isFirstRowOfDay ? miles : "";
+                            const exerciseCell = setNum === 1 ? name : "";
+                            csv += `${dayCell},${exerciseCell},${setNum},${reps},${weight},${stepsCell},${milesCell}\n`;
+                            isFirstRowOfDay = false;
+                        });
+                    });
+                }
+            });
+
+            const blob = new Blob([csv], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "workout_data.csv";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Clear all data
+        function clearData() {
+            if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+                localStorage.clear();
+                document.querySelectorAll("input").forEach(input => input.value = "");
+            }
         }
     </script>
 </body>
