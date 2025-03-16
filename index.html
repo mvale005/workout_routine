@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Day Workout Tracker</title>
+    <title>P90X Weekly Workout Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
         .day-header {
-            background-color: #21466d;
+            background-color: #007BFF;
             color: white;
             padding: 10px;
             cursor: pointer;
@@ -40,15 +40,15 @@
             margin: 5px 0;
             padding-left: 20px;
         }
-        .exercise-input {
+        .exercise-input, .cardio-input {
             margin: 5px 0;
         }
-        .set-input {
+        .set-input, .cardio-set {
             margin-left: 20px;
             font-size: 14px;
         }
         input {
-            width: 50px;
+            width: 60px;
             margin-right: 5px;
             padding: 2px;
         }
@@ -59,22 +59,22 @@
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 3px;
+            margin: 5px auto;
+            display: block;
         }
         button:hover {
             background-color: #218838;
         }
-        #exportBtn {
-            display: block;
-            margin: 20px auto;
+        #clearBtn, #toggleWeekBtn {
             background-color: #dc3545;
         }
-        #clearBtn {
-            display: block;
-            margin: 10px auto;
+        #weekToggle {
+            text-align: center;
+            margin: 10px 0;
         }
         @media (max-width: 600px) {
             input {
-                width: 45px;
+                width: 50px;
             }
             .day-header {
                 font-size: 16px;
@@ -86,315 +86,840 @@
     </style>
 </head>
 <body>
-    <h1>7-Day Workout Tracker</h1>
+    <h1>Weekly Workout Tracker</h1>
+    <div id="weekToggle">
+        <p>Current Week: <span id="weekNum">1</span></p>
+        <button id="toggleWeekBtn" onclick="toggleWeek()">Switch to Week 2</button>
+    </div>
 
+    <!-- Monday: Chest & Back (Week 1) / Chest, Shoulders & Triceps (Week 2) -->
     <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 1: Cardio + Upper Body</div>
+        <div class="day-header" onclick="toggleDay(this)">Monday</div>
         <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> 20 min run/walk (2 min walk, 1 min run, repeat)</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day1_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day1_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong></p>
+            <p><strong>Exercises (Week 1: Chest & Back):</strong></p>
             <ul>
-                <li class="exercise-input" data-exercise="Day1_DumbbellBenchPress">Dumbbell Bench Press:
+                <li class="exercise-input" data-exercise="Monday_StandardPushUps">Standard Push-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
                 </li>
-                <li class="exercise-input" data-exercise="Day1_DumbbellRows">Dumbbell Rows:
+                <li class="exercise-input" data-exercise="Monday_WideFrontPullUps">Wide Front Pull-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
                 </li>
-                <li class="exercise-input" data-exercise="Day1_PullUps">Pull-Ups:
+                <li class="exercise-input" data-exercise="Monday_MilitaryPushUps">Military Push-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    
                 </li>
-                <li class="exercise-input" data-exercise="Day1_PushUps">Push-Ups:
+                <li class="exercise-input" data-exercise="Monday_ReverseGripChinUps">Reverse Grip Chin-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
                 </li>
-                <li class="exercise-input" data-exercise="Day1_Dips">Dips:
+                <li class="exercise-input" data-exercise="Monday_WideFlyPushUps">Wide Fly Push-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Monday_ClosedGripOverhandPullUps">Closed Grip Overhand Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+           
+                </li>
+                <li class="exercise-input" data-exercise="Monday_DeclinePushUps">Decline Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                   
+                </li>
+                <li class="exercise-input" data-exercise="Monday_HeavyPants">Heavy Pants:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Monday_Dips">Dips:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_Lawnmowers">Lawnmowers:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                   
+                </li>
+                <li class="exercise-input" data-exercise="Monday_DiveBomberPushUps">Dive-Bomber Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Monday_BackFlys">Back Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
                 </li>
             </ul>
-            <p><strong>Stretch:</strong> Chest, triceps, hamstring (5-10 min)</p>
-        </div>
-    </div>
-
-    <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 2: Lower Body + Light Cardio</div>
-        <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day2_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day2_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong></p>
+            <p><strong>Exercises (Week 2: Chest, Shoulders & Triceps):</strong></p>
             <ul>
-                <li class="exercise-input" data-exercise="Day2_GobletSquats">Goblet Squats:
+                <li class="exercise-input" data-exercise="Monday_SlowMotion3in1PushUps">Slow-Motion 3-in-1 Push-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                
                 </li>
-                <li class="exercise-input" data-exercise="Day2_DumbbellLunges">Dumbbell Lunges:
+                <li class="exercise-input" data-exercise="Monday_InOutShoulderFlys">In & Out Shoulder Flys:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
                 </li>
-                <li class="exercise-input" data-exercise="Day2_KettlebellDeadlifts">Kettlebell Deadlifts:
+                <li class="exercise-input" data-exercise="Monday_ChairDips">Chair Dips:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                 
                 </li>
-                <li class="exercise-input" data-exercise="Day2_KettlebellSwings">Kettlebell Swings:
+                <li class="exercise-input" data-exercise="Monday_PlangePushUps">Plange Push-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
                 </li>
+                <li class="exercise-input" data-exercise="Monday_PikePresses">Pike Presses:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+        
+                </li>
+                <li class="exercise-input" data-exercise="Monday_SideTriRises">Side Tri-Rises:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+         
+                </li>
+                <li class="exercise-input" data-exercise="Monday_FloorFlys">Floor Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Monday_Scarecrows">Scarecrows:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+              
+                </li>
+                <li class="exercise-input" data-exercise="Monday_OverheadTricepExtensions">Overhead Tricep Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+             
+                </li>
+                <li class="exercise-input" data-exercise="Monday_TwoTwitchSpeedPushUps">Two-Twitch Speed Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
 
-                <li class="exercise-input" data-exercise="Day2_NordicHamstring">Nordic Hamstrings:
+                </li>
+                <li class="exercise-input" data-exercise="Monday_YPresses">Y-Presses:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Monday_LyingTricepExtensions">Lying Tricep Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+         
+                </li>
+                <li class="exercise-input" data-exercise="Monday_SideToSidePushUps">Side-to-Side Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_PourFlys">Pour Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_SideLeaningTricepExtensions">Side-Leaning Tricep Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_OneArmPushUps">One-Arm Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Monday_WeightedCircles">Weighted Circles:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_ThrowTheBomb">Throw the Bomb:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Monday_ClapPlyoPushUps">Clap or Plyo Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+    
+                </li>
+                <li class="exercise-input" data-exercise="Monday_SlowMoThrow">Slow-Mo Throw:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Monday_FrontToBackTricepExtensions">Front-to-Back Tricep Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Monday_OneArmBalancePushUps">One-Arm Balance Push-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+     
+                </li>
+                <li class="exercise-input" data-exercise="Monday_FlyRowPresses">Fly-Row-Presses:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+     
+                </li>
+                <li class="exercise-input" data-exercise="Monday_DumbbellCrossBodyBlows">Dumbbell Cross-Body Blows:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                 </li>
             </ul>
-            <p><strong>Stretch:</strong> Quad, calf, hip flexor (5-10 min)</p>
-        </div>
-    </div>
-
-    <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 3: Running Focus</div>
-        <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> 25 min run/walk (3 min walk, 2 min run, repeat)</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day3_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day3_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong> None</p>
-            <p><strong>Stretch:</strong> Full-body (hamstrings, calves, quads, back) (10 min)</p>
-        </div>
-    </div>
-
-    <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 4: Full Body + Light Cardio</div>
-        <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> 15 min brisk walk or light jog</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day4_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day4_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong></p>
+            <p><strong>Cardio:</strong></p>
             <ul>
-                <li class="exercise-input" data-exercise="Day4_DumbbellShoulderPress">Dumbbell Shoulder Press:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                <li class="cardio-input" data-exercise="Monday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
                 </li>
-                <li class="exercise-input" data-exercise="Day4_KettlebellSwings">Kettlebell Swings:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                </li>
-                <li class="exercise-input" data-exercise="Day4_HangingKneeRaises">Hanging Knee Raises:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                <li class="cardio-input" data-exercise="Monday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
                 </li>
             </ul>
-            <p><strong>Stretch:</strong> Shoulder, lower back, hip (5-10 min)</p>
         </div>
     </div>
 
+    <!-- Tuesday: Steps/Miles + Ab Ripper X -->
     <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 5: Active Recovery</div>
+        <div class="day-header" onclick="toggleDay(this)">Tuesday</div>
         <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5 min light walk</p>
-            <p><strong>Cardio:</strong> 20-30 min easy walk or slow jog</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day5_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day5_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong> Optional: 10 squats, 10 push-ups</p>
-            <p><strong>Stretch:</strong> Full-body (focus tight areas) (10-15 min)</p>
-        </div>
-    </div>
-
-    <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 6: Cardio + Upper Body</div>
-        <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> 20-25 min run/walk (2 min run, 1 min walk, repeat)</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day6_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day6_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong></p>
+            <p><strong>Exercises (Ab Ripper X):</strong></p>
             <ul>
-                <li class="exercise-input" data-exercise="Day6_DumbbellCurls">Dumbbell Curls:
+                <li class="exercise-input" data-exercise="Tuesday_InOut">In & Out:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+            
                 </li>
-                <li class="exercise-input" data-exercise="Day6_TricepExtensions">Tricep Overhead Extensions:
+                <li class="exercise-input" data-exercise="Tuesday_SeatedBicycle">Seated Bicycle:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+               
                 </li>
-                <li class="exercise-input" data-exercise="Day6_PullUp">Pull-Ups:
+                <li class="exercise-input" data-exercise="Tuesday_SeatedCrunchyFrog">Seated Crunchy Frog:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                 
                 </li>
-                <li class="exercise-input" data-exercise="Day6_PushUps">Push-Ups:
+                <li class="exercise-input" data-exercise="Tuesday_CrossedLegSitUps">Crossed-Leg/Wide-Leg Sit-Ups:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+               
                 </li>
-                <li class="exercise-input" data-exercise="Day6_Dips">Dips:
+                <li class="exercise-input" data-exercise="Tuesday_FiferScissors">Fifer Scissors:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_HipRockNRaise">Hip Rock ‘N Raise:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+            
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_PulseUps">Pulse-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+             
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_VUpRollUpCombo">V-Up/Roll-Up Combo:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_ObliqueVUps">Oblique V-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_LegClimbs">Leg Climbs:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Tuesday_MasonTwists">Mason Twists:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+
+                <li class="exercise-input" data-exercise="Tuesday_NordicHamstrings">Nordic Hamstrings:
                     <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
                     <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
                 </li>
             </ul>
-            <p><strong>Stretch:</strong> Arms, chest, calf (5-10 min)</p>
-        </div>
-    </div>
-
-    <div class="day">
-        <div class="day-header" onclick="toggleDay(this)">Day 7: Lower Body</div>
-        <div class="day-content">
-            <p><strong>Warm-Up:</strong> 5-10 min walk + dynamic stretches</p>
-            <p><strong>Cardio:</strong> None</p>
-            <p><strong>Steps:</strong> <input type="number" data-tracker="Day7_Steps" placeholder="Steps" min="0"></p>
-            <p><strong>Miles Run:</strong> <input type="number" data-tracker="Day7_Miles" placeholder="Miles" min="0" step="0.1"></p>
-            <p><strong>Strength:</strong></p>
+            <p><strong>Cardio:</strong></p>
             <ul>
-                <li class="exercise-input" data-exercise="Day7_KettlebellStepUps">Kettlebell Step-Ups:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                <li class="cardio-input" data-exercise="Tuesday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
                 </li>
-                <li class="exercise-input" data-exercise="Day7_RomanianDeadlifts">Dumbbell Romanian Deadlifts:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                </li>
-                <li class="exercise-input" data-exercise="Day7_NordicHamstring">Nordic Hamstrings:
-                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
-                    <div class="set-input">Set 3: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                <li class="cardio-input" data-exercise="Tuesday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
                 </li>
             </ul>
-            <p><strong>Stretch:</strong> Lower body focus (hamstrings, quads, glutes) (10-15 min)</p>
         </div>
     </div>
 
-    <button id="exportBtn" onclick="exportToCSV()">Export to CSV</button>
+    <!-- Wednesday: Shoulders & Arms (Week 1) / Back & Biceps (Week 2) -->
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Wednesday</div>
+        <div class="day-content">
+            <p><strong>Exercises (Week 1: Shoulders & Arms):</strong></p>
+            <ul>
+                <li class="exercise-input" data-exercise="Wednesday_AlternatingShoulderPresses">Alternating Shoulder Presses:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_InOutBicepCurls">In & Out Bicep Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+            
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_TwoArmTricepKickbacks">Two-Arm Tricep Kickbacks:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_DeepSwimmersPresses">Deep Swimmer’s Presses:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_FullSupinationConcentrationCurls">Full Supination Concentration Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_Dips">Dips:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_UprightRows">Upright Rows:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_StaticArmCurls">Static Arm Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_FlipGripTwistTricepKickbacks">Flip-Grip Twist Tricep Kickbacks:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_TwoAngleShoulderFlys">Two-Angle Shoulder Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_CrouchingCohenCurls">Crouching Cohen Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_LyingDownTricepExtensions">Lying-Down Tricep Extensions:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_InOutStraightArmShoulderFlys">In & Out Straight-Arm Shoulder Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_CongdonCurls">Congdon Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_SideTriRises">Side Tri-Rises:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+            </ul>
+            <p><strong>Exercises (Week 2: Back & Biceps):</strong></p>
+            <ul>
+                <li class="exercise-input" data-exercise="Wednesday_WideFrontPullUps">Wide Front Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+               
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_Lawnmowers">Lawnmowers:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_TwentyOnes">Twenty-Ones:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+     
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_OneArmCrossBodyCurls">One-Arm Cross-Body Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+           
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_SwitchGripPullUps">Switch Grip Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_ElbowsOutLawnmowers">Elbows-Out Lawnmowers:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_StandingBicepCurls">Standing Bicep Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_OneArmConcentrationCurls">One-Arm Concentration Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+             
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_CornCobPullUps">Corn Cob Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_ReverseGripBentOverRows">Reverse Grip Bent-Over Rows:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+   
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_OpenArmCurls">Open-Arm Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+     
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_StaticArmCurls">Static-Arm Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_TowelPullUps">Towel Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+  
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_Dips">Dips:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_CrouchingCohenCurls">Crouching Cohen Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_OneArmCorkscrewCurls">One-Arm Corkscrew Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+       
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_ChinUps">Chin-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_SeatedBentOverBackFlys">Seated Bent-Over Back Flys:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+          
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_CurlUpHammerDown">Curl-Up/Hammer-Down:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_HammerCurls">Hammer Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_MaxRepPullUps">Max Rep Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_Superman">Superman:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_InOutHammerCurls">In-Out Hammer Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Wednesday_StripSetCurls">Strip-Set Curls:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+            </ul>
+            <p><strong>Cardio:</strong></p>
+            <ul>
+                <li class="cardio-input" data-exercise="Wednesday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
+                </li>
+                <li class="cardio-input" data-exercise="Wednesday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Thursday: Steps/Miles + Ab Ripper X -->
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Thursday</div>
+        <div class="day-content">
+            <p><strong>Exercises (Ab Ripper X):</strong></p>
+            <ul>
+                <li class="exercise-input" data-exercise="Thursday_InOut">In & Out:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+     
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_SeatedBicycle">Seated Bicycle:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_SeatedCrunchyFrog">Seated Crunchy Frog:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_CrossedLegSitUps">Crossed-Leg/Wide-Leg Sit-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+    
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_FiferScissors">Fifer Scissors:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+      
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_HipRockNRaise">Hip Rock ‘N Raise:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_PulseUps">Pulse-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_VUpRollUpCombo">V-Up/Roll-Up Combo:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_ObliqueVUps">Oblique V-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_LegClimbs">Leg Climbs:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Thursday_MasonTwists">Mason Twists:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                </li>
+
+                <li class="exercise-input" data-exercise="Thursday_NordicHamstrings">Nordic Hamstrings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+            </ul>
+            <p><strong>Cardio:</strong></p>
+            <ul>
+                <li class="cardio-input" data-exercise="Thursday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
+                </li>
+                <li class="cardio-input" data-exercise="Thursday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Friday: Legs & Back -->
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Friday</div>
+        <div class="day-content">
+            <p><strong>Exercises (Legs & Back):</strong></p>
+            <ul>
+                <li class="exercise-input" data-exercise="Friday_BalanceLunges">Balance Lunges:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_CalfRaiseSquats">Calf-Raise Squats:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_ReverseGripChinUps">Reverse Grip Chin-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+        
+                <li class="exercise-input" data-exercise="Friday_WallSquats">Wall Squats:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_WideFrontPullUps">Wide Front Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_StepBackLunges">Step Back Lunges:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_AlternatingSideLunges">Alternating Side Lunges:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_SingleLegWallSquats">Single-Leg Wall Squats:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+ 
+                </li>
+                <li class="exercise-input" data-exercise="Friday_DeadliftSquats">Deadlift Squats:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+           
+                </li>
+                <li class="exercise-input" data-exercise="Friday_SwitchGripPullUps">Switch Grip Pull-Ups:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_ThreeWayLunges">Three-Way Lunges:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                <li class="exercise-input" data-exercise="Friday_NordicHamstrings">Nordic Hamstrings:
+                    <div class="set-input">Set 1: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+                    <div class="set-input">Set 2: <input type="number" placeholder="Reps" min="0"> <input type="number" placeholder="Weight" min="0"> lbs</div>
+
+                </li>
+                
+            </ul>
+            <p><strong>Cardio:</strong></p>
+            <ul>
+                <li class="cardio-input" data-exercise="Friday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
+                </li>
+                <li class="cardio-input" data-exercise="Friday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Saturday: Steps/Miles -->
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Saturday</div>
+        <div class="day-content">
+            <p><strong>Cardio:</strong></p>
+            <ul>
+                <li class="cardio-input" data-exercise="Saturday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
+                </li>
+                <li class="cardio-input" data-exercise="Saturday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Sunday: Rest or Steps/Miles -->
+    <div class="day">
+        <div class="day-header" onclick="toggleDay(this)">Sunday</div>
+        <div class="day-content">
+            <p><strong>Rest or Optional Cardio:</strong></p>
+            <ul>
+                <li class="cardio-input" data-exercise="Sunday_Steps">Steps:
+                    <div class="cardio-set"><input type="number" placeholder="Steps" min="0"></div>
+                </li>
+                <li class="cardio-input" data-exercise="Sunday_MilesRun">Miles Run:
+                    <div class="cardio-set"><input type="number" placeholder="Miles" min="0" step="0.1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+   
     <button id="clearBtn" onclick="clearData()">Clear All Data</button>
-
+    <button onclick="exportToCSV('p90x_workout.csv')">Export to CSV</button>
+    
     <script>
-        // Toggle day content
+        // Toggle visibility of each day's content
         function toggleDay(header) {
             const content = header.nextElementSibling;
-            content.classList.toggle("show");
+            content.classList.toggle('show');
         }
-
-        // Save tracker data (Steps and Miles)
-        document.querySelectorAll("input[data-tracker]").forEach(input => {
-            input.addEventListener("input", function() {
-                const key = this.getAttribute("data-tracker");
-                localStorage.setItem(key, this.value);
-                console.log(`Saved ${key}: ${this.value}`);
-            });
-        });
-
-        // Save exercise data (Reps and Weight)
-        document.querySelectorAll(".exercise-input input").forEach(input => {
-            input.addEventListener("input", function() {
-                const exercise = this.closest(".exercise-input").getAttribute("data-exercise");
-                const setNum = Array.from(this.parentElement.parentElement.children).indexOf(this.parentElement) + 1; // 1-based index
-                const type = this.placeholder.toLowerCase();
-                const key = `${exercise}_Set${setNum}_${type}`;
-                localStorage.setItem(key, this.value);
-                console.log(`Saved ${key}: ${this.value}`);
-            });
-        });
-
-        // Load saved data on page load
-        window.onload = function() {
-            // Load tracker data
-            document.querySelectorAll("input[data-tracker]").forEach(input => {
-                const key = input.getAttribute("data-tracker");
-                const savedValue = localStorage.getItem(key);
-                if (savedValue) {
-                    input.value = savedValue;
-                    console.log(`Loaded ${key}: ${savedValue}`);
-                }
-            });
-
-            // Load exercise data
-            document.querySelectorAll(".exercise-input input").forEach(input => {
-                const exercise = input.closest(".exercise-input").getAttribute("data-exercise");
-                const setNum = Array.from(input.parentElement.parentElement.children).indexOf(input.parentElement) + 1; // 1-based index
-                const type = input.placeholder.toLowerCase();
-                const key = `${exercise}_Set${setNum}_${type}`;
-                const savedValue = localStorage.getItem(key);
-                if (savedValue) {
-                    input.value = savedValue;
-                    console.log(`Loaded ${key}: ${savedValue}`);
-                }
-            });
-        };
-
-        // Export data to CSV
-        function exportToCSV() {
-            let csv = "Day,Exercise,Set,Reps,Weight,Steps,Miles Run\n";
-            const days = document.querySelectorAll(".day");
+    
+        // Toggle between Week 1 and Week 2
+        let currentWeek = 1;
+        function toggleWeek() {
+            currentWeek = currentWeek === 1 ? 2 : 1;
+            document.getElementById('weekNum').textContent = currentWeek;
+            document.getElementById('toggleWeekBtn').textContent = `Switch to Week ${currentWeek === 1 ? 2 : 1}`;
+            updateWeekDisplay();
+        }
+    
+        // Update display based on the current week
+        function updateWeekDisplay() {
+            const days = document.querySelectorAll('.day');
             days.forEach(day => {
-                const dayName = day.querySelector(".day-header").textContent.split(":")[0].replace(" ", "");
-                const steps = localStorage.getItem(`${dayName}_Steps`) || "";
-                const miles = localStorage.getItem(`${dayName}_Miles`) || "";
-                const exercises = day.querySelectorAll(".exercise-input");
-
-                let isFirstRowOfDay = true;
-
-                if (exercises.length === 0) {
-                    csv += `${dayName},,,,${steps},${miles}\n`;
-                } else {
-                    exercises.forEach(exercise => {
-                        const fullName = exercise.getAttribute("data-exercise");
-                        const name = fullName.replace(`${dayName}_`, "").replace(/([A-Z])/g, " $1").trim(); // Clean up name
-                        const sets = exercise.querySelectorAll(".set-input");
-                        sets.forEach((set, index) => {
-                            const setNum = index + 1;
-                            const reps = localStorage.getItem(`${fullName}_Set${setNum}_reps`) || "";
-                            const weight = localStorage.getItem(`${fullName}_Set${setNum}_weight`) || "";
-                            const dayCell = isFirstRowOfDay ? dayName : "";
-                            const stepsCell = isFirstRowOfDay ? steps : "";
-                            const milesCell = isFirstRowOfDay ? miles : "";
-                            const exerciseCell = setNum === 1 ? name : "";
-                            csv += `${dayCell},${exerciseCell},${setNum},${reps},${weight},${stepsCell},${milesCell}\n`;
-                            isFirstRowOfDay = false;
+                const dayName = day.querySelector('.day-header').textContent;
+                const content = day.querySelector('.day-content');
+                if (dayName === 'Monday' || dayName === 'Wednesday') {
+                    const week1Exercises = content.querySelectorAll('ul')[0];
+                    const week2Exercises = content.querySelectorAll('ul')[1];
+                    if (currentWeek === 1) {
+                        week1Exercises.style.display = 'block';
+                        week2Exercises.style.display = 'none';
+                    } else {
+                        week1Exercises.style.display = 'none';
+                        week2Exercises.style.display = 'block';
+                    }
+                }
+            });
+        }
+    
+        // Save data to localStorage whenever an input changes
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', saveData);
+        });
+    
+        // Load data from localStorage when the page loads
+        window.addEventListener('load', loadData);
+    
+        function saveData() {
+            const data = {};
+            const days = document.querySelectorAll('.day');
+            days.forEach(day => {
+                const dayName = day.querySelector('.day-header').textContent;
+                data[dayName] = {};
+    
+                // Save exercise data
+                const exercises = day.querySelectorAll('.exercise-input');
+                exercises.forEach(exercise => {
+                    const exerciseName = exercise.getAttribute('data-exercise');
+                    const sets = exercise.querySelectorAll('.set-input');
+                    data[dayName][exerciseName] = [];
+                    sets.forEach((set, index) => {
+                        const reps = set.querySelector('input[type="number"]:nth-child(1)').value;
+                        const weight = set.querySelector('input[type="number"]:nth-child(2)').value;
+                        data[dayName][exerciseName].push({
+                            set: index + 1,
+                            reps: reps || 0,
+                            weight: weight || 0
                         });
                     });
-                }
+                });
+    
+                // Save cardio data
+                const cardio = day.querySelectorAll('.cardio-input');
+                cardio.forEach(item => {
+                    const cardioName = item.getAttribute('data-exercise');
+                    const value = item.querySelector('input').value;
+                    data[dayName][cardioName] = value || 0;
+                });
             });
-
-            const blob = new Blob([csv], { type: "text/csv" });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "workout_data.csv";
-            a.click();
-            window.URL.revokeObjectURL(url);
+    
+            localStorage.setItem('p90x_tracker_data', JSON.stringify(data));
+        }
+    
+        function loadData() {
+            const savedData = localStorage.getItem('p90x_tracker_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const days = document.querySelectorAll('.day');
+                days.forEach(day => {
+                    const dayName = day.querySelector('.day-header').textContent;
+                    if (data[dayName]) {
+                        // Load exercise data
+                        const exercises = day.querySelectorAll('.exercise-input');
+                        exercises.forEach(exercise => {
+                            const exerciseName = exercise.getAttribute('data-exercise');
+                            if (data[dayName][exerciseName]) {
+                                const sets = exercise.querySelectorAll('.set-input');
+                                data[dayName][exerciseName].forEach((setData, index) => {
+                                    if (sets[index]) {
+                                        sets[index].querySelector('input[type="number"]:nth-child(1)').value = setData.reps;
+                                        sets[index].querySelector('input[type="number"]:nth-child(2)').value = setData.weight;
+                                    }
+                                });
+                            }
+                        });
+    
+                        // Load cardio data
+                        const cardio = day.querySelectorAll('.cardio-input');
+                        cardio.forEach(item => {
+                            const cardioName = item.getAttribute('data-exercise');
+                            if (data[dayName][cardioName]) {
+                                item.querySelector('input').value = data[dayName][cardioName];
+                            }
+                        });
+                    }
+                });
+            }
+            updateWeekDisplay();
         }
 
-        // Clear all data
+    function exportToCSV(filename = 'p90x_data.csv') {
+    const exercises = document.querySelectorAll('.exercise-input');
+    let data = [['Exercise', 'Set 1 Reps', 'Set 1 Weight', 'Set 2 Reps', 'Set 2 Weight', 'Set 3 Reps', 'Set 3 Weight']]; // Add more sets as needed
+    let exerciseData = {};
+
+    exercises.forEach(exercise => {
+        const name = exercise.dataset.exercise;
+        if (!exerciseData[name]) exerciseData[name] = [];
+        
+        const sets = exercise.querySelectorAll('.set-input');
+        sets.forEach((set, index) => {
+            const reps = set.querySelector('input[placeholder="Reps"]').value || 0;
+            const weight = set.querySelector('input[placeholder="Weight"]').value || 0;
+            exerciseData[name][index] = [reps, weight];
+        });
+    });
+
+    for (const [exercise, sets] of Object.entries(exerciseData)) {
+        let row = [exercise];
+        sets.forEach(set => row.push(set[0], set[1])); // Add reps and weight for each set
+        data.push(row);
+    }
+
+    let csv = data.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+// Usage: exportToCSV();
+    
         function clearData() {
-            if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
-                localStorage.clear();
-                document.querySelectorAll("input").forEach(input => input.value = "");
+            if (confirm('Are you sure you want to clear all data?')) {
+                localStorage.removeItem('p90x_tracker_data');
+                document.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
             }
         }
     </script>
-</body>
-</html>
+    </body>
+    </html>
